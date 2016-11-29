@@ -22,8 +22,8 @@ public class DisplayUtils {
     /**
      * Gets size of screen in density-independent pixels (dp, dip).
      *
-     * @param context
-     * @return
+     * @param context Context of the app.
+     * @return Size (width and height) of screen in dp.
      */
     @SuppressLint("NewApi")
     public static Point getScreenSizeInDpWrapped(Context context) {
@@ -62,8 +62,8 @@ public class DisplayUtils {
     /**
      * Gets diagonal of screen in inches.
      *
-     * @param context
-     * @return
+     * @param context Context of the app.
+     * @return Diagonal length of the device screen, in inches.
      */
     @SuppressLint("NewApi")
     public static double getScreenDiagonalInInches(Context context) {
@@ -81,15 +81,14 @@ public class DisplayUtils {
         float widthIn = widthPx / xDpi;
         float heightIn = heightPx / yDpi;
 
-        double diagonalIn = Math.sqrt(widthIn * widthIn + heightIn * heightIn);
-        return diagonalIn;
+        return Math.sqrt(widthIn * widthIn + heightIn * heightIn);
     }
 
     /**
      * Gets display metrics.
      *
-     * @param context
-     * @return
+     * @param context Context of the app.
+     * @return DisplayMetrics object for the device screen.
      */
     @SuppressLint("NewApi")
     public static DisplayMetrics getDisplayMetrics(Context context) {
@@ -111,8 +110,8 @@ public class DisplayUtils {
     /**
      * Gets size of screen in pixels (px).
      *
-     * @param context
-     * @return
+     * @param context Context of the app.
+     * @return Size (width and height) of screen in px.
      */
     public static Point getScreenSizeInPx(Context context) {
         WindowManager windowManager = (WindowManager) context

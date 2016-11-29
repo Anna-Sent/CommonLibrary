@@ -15,7 +15,7 @@ public class UserEmailFetcher {
     private static final String INVALID_EMAIL = "";
 
     /**
-     * @param context
+     * @param context Context of the app.
      * @return email or empty string
      */
     @TargetApi(Build.VERSION_CODES.ECLAIR)

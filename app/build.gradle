@@ -6,6 +6,8 @@ android {
 
     defaultConfig {
         targetSdkVersion 19
+        versionCode 1
+        versionName "1.0"
     }
 
     buildTypes {
@@ -13,6 +15,13 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
+    }
+}
+
+android {
+    lintOptions {
+        lintConfig = rootProject.file("lint.xml")
+        println "Lint config file = " + lintConfig
     }
 }
 

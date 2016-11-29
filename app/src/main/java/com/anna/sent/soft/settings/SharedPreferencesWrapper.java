@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class SharedPreferencesWrapper implements SharedPreferences {
-    private SharedPreferences mSettings;
+    private final SharedPreferences mSettings;
 
     public SharedPreferencesWrapper(SharedPreferences settings) {
         mSettings = settings;

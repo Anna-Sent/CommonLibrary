@@ -14,7 +14,7 @@ import com.anna.sent.soft.strategy.BaseStrategy;
 import com.anna.sent.soft.strategy.Strategies;
 
 public class StrategyFragment extends Fragment {
-    private Strategies mStrategies = new Strategies();
+    private final Strategies mStrategies = new Strategies();
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -106,11 +106,7 @@ public class StrategyFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mStrategies.onOptionsItemSelected(item)) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return mStrategies.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     public boolean onKeyDown(int keyCode, KeyEvent event) {

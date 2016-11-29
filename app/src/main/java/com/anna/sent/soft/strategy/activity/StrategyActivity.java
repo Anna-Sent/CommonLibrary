@@ -14,7 +14,7 @@ import com.anna.sent.soft.strategy.Strategies;
 
 @SuppressLint("Registered")
 public class StrategyActivity extends Activity {
-    private Strategies mStrategies = new Strategies();
+    private final Strategies mStrategies = new Strategies();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,37 +98,21 @@ public class StrategyActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (mStrategies.onCreateOptionsMenu(menu)) {
-            return true;
-        }
-
-        return super.onCreateOptionsMenu(menu);
+        return mStrategies.onCreateOptionsMenu(menu) || super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (mStrategies.onPrepareOptionsMenu(menu)) {
-            return true;
-        }
-
-        return super.onPrepareOptionsMenu(menu);
+        return mStrategies.onPrepareOptionsMenu(menu) || super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mStrategies.onOptionsItemSelected(item)) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return mStrategies.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (mStrategies.onKeyDown(keyCode, event)) {
-            return true;
-        }
-
-        return super.onKeyDown(keyCode, event);
+        return mStrategies.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
     }
 }

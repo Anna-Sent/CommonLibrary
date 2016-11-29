@@ -19,7 +19,7 @@ import java.util.List;
 @SuppressLint("Registered")
 public class StrategyFragmentActivity extends FragmentActivity implements
         FragmentKeeper {
-    private Strategies mStrategies = new Strategies();
+    private final Strategies mStrategies = new Strategies();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,29 +103,17 @@ public class StrategyFragmentActivity extends FragmentActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (mStrategies.onCreateOptionsMenu(menu)) {
-            return true;
-        }
-
-        return super.onCreateOptionsMenu(menu);
+        return mStrategies.onCreateOptionsMenu(menu) || super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        if (mStrategies.onPrepareOptionsMenu(menu)) {
-            return true;
-        }
-
-        return super.onPrepareOptionsMenu(menu);
+        return mStrategies.onPrepareOptionsMenu(menu) || super.onPrepareOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mStrategies.onOptionsItemSelected(item)) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return mStrategies.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -145,7 +133,7 @@ public class StrategyFragmentActivity extends FragmentActivity implements
         return super.onKeyDown(keyCode, event);
     }
 
-    private List<StrategyFragment> mStrategyFragments = new ArrayList<StrategyFragment>();
+    private final List<StrategyFragment> mStrategyFragments = new ArrayList<StrategyFragment>();
 
     @Override
     public void attach(Fragment f) {

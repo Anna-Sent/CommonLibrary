@@ -39,8 +39,7 @@ public class DisplayUtils {
             }
         }
 
-        Point outPoint = getScreenSizeInDp(context);
-        return outPoint;
+        return getScreenSizeInDp(context);
     }
 
     private static Point getScreenSizeInDp(Context context) {
@@ -142,7 +141,7 @@ public class DisplayUtils {
                 outPoint.x = (Integer) mGetRawW.invoke(display);
                 outPoint.y = (Integer) mGetRawH.invoke(display);
                 return outPoint;
-            } catch (Throwable e) {
+            } catch (Throwable ignored) {
             }
         }
 

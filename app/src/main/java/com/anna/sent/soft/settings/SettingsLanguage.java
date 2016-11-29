@@ -38,8 +38,7 @@ public abstract class SettingsLanguage {
                         getLanguageValuesArrayResourceId());
                 String value = languages[i];
                 try {
-                    int id = Integer.parseInt(value);
-                    return id;
+                    return Integer.parseInt(value);
                 } catch (NumberFormatException e) {
                     throw new RuntimeException("Incorrect value of language: "
                             + value, e);

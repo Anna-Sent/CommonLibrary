@@ -33,7 +33,7 @@ public abstract class StateSaverBaseActivity extends StrategyFragmentActivity
         }
     }
 
-    private ArrayList<StateSaver> mStateSavers = new ArrayList<StateSaver>();
+    private final ArrayList<StateSaver> mStateSavers = new ArrayList<StateSaver>();
 
     protected abstract void setupTheme();
 

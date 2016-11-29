@@ -3,9 +3,9 @@ package com.anna.sent.soft.strategy.statesaver;
 import android.os.Bundle;
 
 public interface StateSaver {
-	public void setViews(Bundle savedInstanceState);
+    void setViews(Bundle savedInstanceState);
 
-	public void restoreState(Bundle state);
+    void restoreState(Bundle state);
 
-	public void saveState(Bundle state);
+    void saveState(Bundle state);
 }

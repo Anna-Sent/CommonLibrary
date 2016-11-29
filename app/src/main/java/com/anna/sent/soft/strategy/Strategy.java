@@ -6,33 +6,33 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 
 public interface Strategy {
-	void onCreate(Bundle savedInstanceState);
+    void onCreate(Bundle savedInstanceState);
 
-	void onActivityResult(int requestCode, int resultCode, Intent data);
+    void onActivityResult(int requestCode, int resultCode, Intent data);
 
-	void onRestart();
+    void onRestart();
 
-	void onStart();
+    void onStart();
 
-	void onRestoreInstanceState(Bundle savedInstanceState);
+    void onRestoreInstanceState(Bundle savedInstanceState);
 
-	void onResume();
+    void onResume();
 
-	void onPause();
+    void onPause();
 
-	void onSaveInstanceState(Bundle outState);
+    void onSaveInstanceState(Bundle outState);
 
-	void onStop();
+    void onStop();
 
-	void onDestroy();
+    void onDestroy();
 
-	void onConfigurationChanged(Configuration newConfig);
+    void onConfigurationChanged(Configuration newConfig);
 
-	boolean onCreateOptionsMenu(android.view.Menu menu);
+    boolean onCreateOptionsMenu(android.view.Menu menu);
 
-	boolean onPrepareOptionsMenu(android.view.Menu menu);
+    boolean onPrepareOptionsMenu(android.view.Menu menu);
 
-	boolean onOptionsItemSelected(android.view.MenuItem item);
+    boolean onOptionsItemSelected(android.view.MenuItem item);
 
-	public boolean onKeyDown(int keyCode, KeyEvent event);
+    boolean onKeyDown(int keyCode, KeyEvent event);
 }

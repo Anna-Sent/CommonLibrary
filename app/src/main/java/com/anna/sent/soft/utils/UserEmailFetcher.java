@@ -2,9 +2,8 @@ package com.anna.sent.soft.utils;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.annotation.TargetApi;
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.os.Build;
 
 /**
  * This class uses the AccountManager to get the primary email address of the
@@ -18,27 +17,22 @@ public class UserEmailFetcher {
      * @param context Context of the app.
      * @return email or empty string
      */
-    @TargetApi(Build.VERSION_CODES.ECLAIR)
     public static String getEmail(Context context) {
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ECLAIR) {
-                AccountManager accountManager = AccountManager.get(context);
-                Account account = getAccount(accountManager);
-                if (account == null) {
-                    return INVALID_EMAIL;
-                } else {
-                    return account.name;
-                }
-            } else {
+            AccountManager accountManager = AccountManager.get(context);
+            Account account = getAccount(accountManager);
+            if (account == null) {
                 return INVALID_EMAIL;
+            } else {
+                return account.name;
             }
         } catch (Exception e) {
             return INVALID_EMAIL;
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.ECLAIR)
     private static Account getAccount(AccountManager accountManager) {
+        @SuppressLint("MissingPermission")
         Account[] accounts = accountManager.getAccountsByType("com.google");
         Account account;
         if (accounts.length > 0) {

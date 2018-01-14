@@ -1,159 +1,76 @@
 package com.anna.sent.soft.utils;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Point;
-import android.os.Build;
 import android.util.DisplayMetrics;
-import android.view.Display;
-import android.view.WindowManager;
 
-import java.lang.reflect.Method;
-
-/**
- * Orientation of device affects on returned width, height.
- * <p>
- * determining tablet - with configuration layout info; with resources values
- *
- * @author Anna
- */
 public class DisplayUtils {
-    /**
-     * Gets size of screen in density-independent pixels (dp, dip).
-     *
-     * @param context Context of the app.
-     * @return Size (width and height) of screen in dp.
-     */
-    @SuppressLint("NewApi")
-    public static Point getScreenSizeInDpWrapped(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int widthDp = context.getResources().getConfiguration().screenWidthDp;
-            int heightDp = context.getResources().getConfiguration().screenHeightDp;
-            if (widthDp != Configuration.SCREEN_WIDTH_DP_UNDEFINED
-                    && heightDp != Configuration.SCREEN_HEIGHT_DP_UNDEFINED) {
-                Point outPoint = new Point();
-                outPoint.x = widthDp;
-                outPoint.y = heightDp;
-                return outPoint;
-            }
+    public static Point getScreenSizeInDp() {
+        int widthDp = Resources.getSystem().getConfiguration().screenWidthDp;
+        int heightDp = Resources.getSystem().getConfiguration().screenHeightDp;
+        if (widthDp > 0 && heightDp > 0) {
+            return createPoint(widthDp, heightDp);
         }
 
-        return getScreenSizeInDp(context);
+        return getScreenSizeInDp(getDisplayMetrics());
     }
 
-    private static Point getScreenSizeInDp(Context context) {
-        DisplayMetrics metrics = getDisplayMetrics(context);
-
+    private static Point getScreenSizeInDp(DisplayMetrics metrics) {
         float density = metrics.density;
 
-        int widthPx = metrics.widthPixels;
-        int heightPx = metrics.heightPixels;
+        Point sizeInPx = getScreenSizeInPx(metrics);
 
-        int widthDp = (int) (widthPx / density);
-        int heightDp = (int) (heightPx / density);
+        int widthDp = (int) (sizeInPx.x / density);
+        int heightDp = (int) (sizeInPx.y / density);
 
-        Point outPoint = new Point();
-        outPoint.x = widthDp;
-        outPoint.y = heightDp;
-        return outPoint;
+        return createPoint(widthDp, heightDp);
     }
 
-    /**
-     * Gets diagonal of screen in inches.
-     *
-     * @param context Context of the app.
-     * @return Diagonal length of the device screen, in inches.
-     */
-    @SuppressLint("NewApi")
-    public static double getScreenDiagonalInInches(Context context) {
-        int orientation = context.getResources().getConfiguration().orientation;
+    public static Point getScreenSizeInPx() {
+        return getScreenSizeInPx(getDisplayMetrics());
+    }
+
+    private static Point getScreenSizeInPx(DisplayMetrics metrics) {
+        return createPoint(metrics.widthPixels, metrics.heightPixels);
+    }
+
+    public static double getScreenDiagonalInInches() {
+        int orientation = Resources.getSystem().getConfiguration().orientation;
         boolean isPortrait = orientation == Configuration.ORIENTATION_PORTRAIT;
 
-        DisplayMetrics metrics = getDisplayMetrics(context);
+        DisplayMetrics metrics = getDisplayMetrics();
 
         float xDpi = isPortrait ? metrics.xdpi : metrics.ydpi;
         float yDpi = isPortrait ? metrics.ydpi : metrics.xdpi;
 
-        int widthPx = metrics.widthPixels;
-        int heightPx = metrics.heightPixels;
+        Point sizeInPx = getScreenSizeInPx(metrics);
 
-        float widthIn = widthPx / xDpi;
-        float heightIn = heightPx / yDpi;
+        float widthIn = sizeInPx.x / xDpi;
+        float heightIn = sizeInPx.y / yDpi;
 
         return Math.sqrt(widthIn * widthIn + heightIn * heightIn);
     }
 
-    /**
-     * Gets display metrics.
-     *
-     * @param context Context of the app.
-     * @return DisplayMetrics object for the device screen.
-     */
-    @SuppressLint("NewApi")
-    public static DisplayMetrics getDisplayMetrics(Context context) {
-        WindowManager windowManager = (WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE);
-        Display display = windowManager.getDefaultDisplay();
-
-        DisplayMetrics metrics = new DisplayMetrics();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            display.getRealMetrics(metrics);
-        } else {
-            display.getMetrics(metrics);
+    public static int getStatusBarHeight() {
+        int result = 0;
+        int resourceId = Resources.getSystem().getIdentifier(
+                "status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = Resources.getSystem().getDimensionPixelSize(resourceId);
         }
 
-        return metrics;
+        return result;
     }
 
-    /**
-     * Gets size of screen in pixels (px).
-     *
-     * @param context Context of the app.
-     * @return Size (width and height) of screen in px.
-     */
-    public static Point getScreenSizeInPx(Context context) {
-        WindowManager windowManager = (WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE);
-        Display display = windowManager.getDefaultDisplay();
-
-        return getScreenSizeInPx(display);
-    }
-
-    @SuppressLint("NewApi")
-    private static Point getScreenSizeInPx(Display display) {
+    private static Point createPoint(int width, int height) {
         Point outPoint = new Point();
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            DisplayMetrics metrics = new DisplayMetrics();
-            display.getRealMetrics(metrics); // display.getRealSize(outPoint);
-            outPoint.x = metrics.widthPixels;
-            outPoint.y = metrics.heightPixels;
-            return outPoint;
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-            try {
-                Method mGetRawH = Display.class.getMethod("getRawHeight");
-                Method mGetRawW = Display.class.getMethod("getRawWidth");
-                outPoint.x = (Integer) mGetRawW.invoke(display);
-                outPoint.y = (Integer) mGetRawH.invoke(display);
-                return outPoint;
-            } catch (Throwable ignored) {
-            }
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            display.getSize(outPoint);
-            return outPoint;
-        }
-
-        DisplayMetrics metrics = new DisplayMetrics();
-        display.getMetrics(metrics);
-        outPoint.x = metrics.widthPixels; // display.getWidth();
-        outPoint.y = metrics.heightPixels; // display.getHeight();
-
+        outPoint.x = width;
+        outPoint.y = height;
         return outPoint;
+    }
+
+    private static DisplayMetrics getDisplayMetrics() {
+        return Resources.getSystem().getDisplayMetrics();
     }
 }

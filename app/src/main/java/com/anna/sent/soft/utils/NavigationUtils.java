@@ -8,9 +8,14 @@ import android.support.v4.app.TaskStackBuilder;
 public class NavigationUtils {
     public static void navigateUp(Activity activity) {
         Intent upIntent = NavUtils.getParentActivityIntent(activity);
+        if (upIntent == null) {
+            return;
+        }
+
         if (NavUtils.shouldUpRecreateTask(activity, upIntent)) {
             TaskStackBuilder.create(activity)
-                    .addNextIntentWithParentStack(upIntent).startActivities();
+                    .addNextIntentWithParentStack(upIntent)
+                    .startActivities();
         } else {
             NavUtils.navigateUpTo(activity, upIntent);
         }

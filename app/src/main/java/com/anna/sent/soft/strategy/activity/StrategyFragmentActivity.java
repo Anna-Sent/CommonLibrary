@@ -1,6 +1,5 @@
 package com.anna.sent.soft.strategy.activity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -16,10 +15,9 @@ import com.anna.sent.soft.strategy.Strategies;
 import java.util.ArrayList;
 import java.util.List;
 
-@SuppressLint("Registered")
-public class StrategyFragmentActivity extends FragmentActivity implements
-        FragmentKeeper {
+public class StrategyFragmentActivity extends FragmentActivity implements FragmentKeeper {
     private final Strategies mStrategies = new Strategies();
+    private final List<StrategyFragment> mStrategyFragments = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,8 +130,6 @@ public class StrategyFragmentActivity extends FragmentActivity implements
 
         return super.onKeyDown(keyCode, event);
     }
-
-    private final List<StrategyFragment> mStrategyFragments = new ArrayList<StrategyFragment>();
 
     @Override
     public void attach(Fragment f) {

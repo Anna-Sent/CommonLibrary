@@ -10,7 +10,11 @@ public abstract class SettingsLanguage {
 
         if (isLanguageSetByUser(context)) {
             SharedPreferences settings = getSettings(context);
-            String value = settings.getString(getLanguageKey(context), "");
+            String value = settings.getString(getLanguageKey(context), null);
+            if (value == null) {
+                return defaultValue;
+            }
+
             try {
                 int id = Integer.parseInt(value);
                 int index = getLanguageIndex(context, id);
@@ -28,10 +32,8 @@ public abstract class SettingsLanguage {
     }
 
     private int getDefaultLanguage(Context context) {
-        String[] locales = context.getResources().getStringArray(
-                getLocaleArrayResourceId());
-        String currentLocale = context.getResources().getConfiguration().locale
-                .getLanguage();
+        String[] locales = context.getResources().getStringArray(getLocaleArrayResourceId());
+        String currentLocale = context.getResources().getConfiguration().locale.getLanguage();
         for (int i = 0; i < locales.length; ++i) {
             if (locales[i].equals(currentLocale)) {
                 String[] languages = context.getResources().getStringArray(
@@ -40,8 +42,7 @@ public abstract class SettingsLanguage {
                 try {
                     return Integer.parseInt(value);
                 } catch (NumberFormatException e) {
-                    throw new RuntimeException("Incorrect value of language: "
-                            + value, e);
+                    throw new RuntimeException("Incorrect value of language: " + value, e);
                 }
             }
         }
@@ -50,8 +51,7 @@ public abstract class SettingsLanguage {
     }
 
     public String getLocale(Context context) {
-        String[] locales = context.getResources().getStringArray(
-                getLocaleArrayResourceId());
+        String[] locales = context.getResources().getStringArray(getLocaleArrayResourceId());
         int id = getLanguage(context);
         int index = getLanguageIndex(context, id);
         return locales[index];
@@ -79,7 +79,7 @@ public abstract class SettingsLanguage {
         Editor editor = settings.edit();
         editor.putString(getLanguageKey(context), String.valueOf(value));
         editor.putBoolean(getIsLanguageSetByUserKey(context), true);
-        editor.commit();
+        editor.apply();
     }
 
     protected abstract SharedPreferences getSettings(Context context);

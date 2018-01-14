@@ -1,6 +1,5 @@
 package com.anna.sent.soft.strategy.activity;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -12,7 +11,6 @@ import android.view.MenuItem;
 import com.anna.sent.soft.strategy.BaseStrategy;
 import com.anna.sent.soft.strategy.Strategies;
 
-@SuppressLint("Registered")
 public class StrategyActivity extends Activity {
     private final Strategies mStrategies = new Strategies();
 

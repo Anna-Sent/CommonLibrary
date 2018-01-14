@@ -11,10 +11,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Strategies implements Strategy {
-    private final Map<String, BaseStrategy> mStrategies = new HashMap<String, BaseStrategy>();
-
     // TODO implement iterator for subclasses
-    protected final List<String> mKeys = new ArrayList<String>();
+    protected final List<String> mKeys = new ArrayList<>();
+    private final Map<String, BaseStrategy> mStrategies = new HashMap<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -1,8 +1,6 @@
 package com.anna.sent.soft.settings;
 
-import android.annotation.TargetApi;
 import android.content.SharedPreferences;
-import android.os.Build;
 
 import java.util.Map;
 import java.util.Set;
@@ -28,7 +26,6 @@ public class SharedPreferencesWrapper implements SharedPreferences {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     @Override
     public Set<String> getStringSet(String key, Set<String> defValues) {
         try {

@@ -14,6 +14,7 @@ public abstract class StateSaverBaseActivity extends StrategyFragmentActivity
         implements StateSaver, FragmentKeeper, LifecycleStrategy.Listener {
     private static final String TAG = "moo";
     private static final boolean DEBUG = false;
+    private final ArrayList<StateSaver> mStateSavers = new ArrayList<>();
 
     private String wrapMsg(String msg) {
         return getClass().getSimpleName() + ": " + msg;
@@ -26,14 +27,11 @@ public abstract class StateSaverBaseActivity extends StrategyFragmentActivity
         }
     }
 
-    @SuppressWarnings("unused")
     private void log(String msg, boolean debug) {
         if (DEBUG && debug) {
             Log.d(TAG, wrapMsg(msg));
         }
     }
-
-    private final ArrayList<StateSaver> mStateSavers = new ArrayList<StateSaver>();
 
     protected abstract void setupTheme();
 

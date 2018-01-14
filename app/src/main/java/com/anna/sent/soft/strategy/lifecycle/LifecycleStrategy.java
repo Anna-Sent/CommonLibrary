@@ -7,11 +7,11 @@ import android.os.Bundle;
 import com.anna.sent.soft.strategy.BaseStrategy;
 
 public class LifecycleStrategy extends BaseStrategy {
-    public interface Listener {
-        void log(String msg);
-    }
-
     private Listener mListener = null;
+    private boolean mIsPaused, mIsResumed;
+    private boolean mIsStopped;
+    private boolean mIsDestroyed;
+    private boolean mIsInstanceStateSaved;
 
     public LifecycleStrategy() {
         this(null);
@@ -20,11 +20,6 @@ public class LifecycleStrategy extends BaseStrategy {
     public LifecycleStrategy(Listener listener) {
         mListener = listener;
     }
-
-    private boolean mIsPaused, mIsResumed;
-    private boolean mIsStopped;
-    private boolean mIsDestroyed;
-    private boolean mIsInstanceStateSaved;
 
     public boolean isPaused() {
         return mIsPaused;
@@ -71,9 +66,10 @@ public class LifecycleStrategy extends BaseStrategy {
                     + ", "
                     + resultCode
                     + ", "
-                    + (data == null ? "data is null"
-                    : (data.getExtras() == null ? "bundle is null"
-                    : data.getExtras().toString())) + ")");
+                    + (data == null
+                    ? "data is null"
+                    : (data.getExtras() == null ? "bundle is null" : data.getExtras()))
+                    + ")");
         }
     }
 
@@ -161,5 +157,9 @@ public class LifecycleStrategy extends BaseStrategy {
     @Override
     public void release() {
         mListener = null;
+    }
+
+    public interface Listener {
+        void log(String msg);
     }
 }

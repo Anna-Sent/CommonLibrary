@@ -1,9 +1,10 @@
 package com.anna.sent.soft.strategy.activity;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -15,6 +16,7 @@ import com.anna.sent.soft.strategy.Strategies;
 
 public class StrategyFragment extends Fragment {
     private final Strategies mStrategies = new Strategies();
+    private FragmentKeeper mFragmentKeeper;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -36,13 +38,13 @@ public class StrategyFragment extends Fragment {
         return mStrategies.getStrategy(name);
     }
 
+    // no onRestart
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mStrategies.onActivityResult(requestCode, resultCode, data);
     }
-
-    // no onRestart
 
     @Override
     public void onStart() {
@@ -69,7 +71,7 @@ public class StrategyFragment extends Fragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
+    public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         mStrategies.onSaveInstanceState(outState);
     }
@@ -113,13 +115,11 @@ public class StrategyFragment extends Fragment {
         return mStrategies.onKeyDown(keyCode, event);
     }
 
-    private FragmentKeeper mFragmentKeeper;
-
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (activity instanceof FragmentKeeper) {
-            mFragmentKeeper = (FragmentKeeper) activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof FragmentKeeper) {
+            mFragmentKeeper = (FragmentKeeper) context;
             mFragmentKeeper.attach(this);
         }
     }

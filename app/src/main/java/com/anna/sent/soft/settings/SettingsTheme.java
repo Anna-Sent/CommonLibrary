@@ -10,7 +10,11 @@ public abstract class SettingsTheme {
         int defaultValue = getDefaultThemeId(context);
 
         SharedPreferences settings = getSettings(context);
-        String value = settings.getString(getThemeKey(context), "");
+        String value = settings.getString(getThemeKey(context), null);
+        if (value == null) {
+            return defaultValue;
+        }
+
         try {
             int id = Integer.parseInt(value);
             int index = getThemeIndex(context, id);
@@ -26,8 +30,7 @@ public abstract class SettingsTheme {
 
     public int getStyle(Context context, int styleArrayResourceId,
                         int defaultStyleResourceId) {
-        TypedArray styles = context.getResources().obtainTypedArray(
-                styleArrayResourceId);
+        TypedArray styles = context.getResources().obtainTypedArray(styleArrayResourceId);
         int id = getTheme(context);
         int index = getThemeIndex(context, id);
         int resourceId = styles.getResourceId(index, defaultStyleResourceId);
@@ -36,8 +39,7 @@ public abstract class SettingsTheme {
     }
 
     private int getThemeIndex(Context context, int id) {
-        String[] themes = context.getResources().getStringArray(
-                getThemeValuesArrayResourceId());
+        String[] themes = context.getResources().getStringArray(getThemeValuesArrayResourceId());
         for (int i = 0; i < themes.length; ++i) {
             if (themes[i].equals(String.valueOf(id))) {
                 return i;
@@ -51,7 +53,7 @@ public abstract class SettingsTheme {
         SharedPreferences settings = getSettings(context);
         Editor editor = settings.edit();
         editor.putString(getThemeKey(context), String.valueOf(value));
-        editor.commit();
+        editor.apply();
     }
 
     protected abstract SharedPreferences getSettings(Context context);

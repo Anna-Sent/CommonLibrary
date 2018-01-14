@@ -1,28 +1,28 @@
 package com.anna.sent.soft.strategy.statesaver;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 
 import com.anna.sent.soft.strategy.activity.FragmentKeeper;
 
-public abstract class StateSaverFragment extends Fragment implements StateSaver {
+public abstract class StateSaverBaseFragment extends Fragment implements StateSaver {
     private static final String TAG = "moo";
     private static final boolean DEBUG = false;
+    private FragmentKeeper mFragmentKeeper;
 
     private String wrapMsg(String msg) {
         return getClass().getSimpleName() + ": " + msg;
     }
 
-    @SuppressWarnings("unused")
     private void log(String msg) {
         if (DEBUG) {
             Log.d(TAG, wrapMsg(msg));
         }
     }
 
-    @SuppressWarnings("unused")
     private void log(String msg, boolean debug) {
         if (DEBUG && debug) {
             Log.d(TAG, wrapMsg(msg));
@@ -39,7 +39,7 @@ public abstract class StateSaverFragment extends Fragment implements StateSaver 
             // log("restore 1");
             restoreState(savedInstanceState);
         } else {
-            savedInstanceState = getActivity().getIntent().getExtras();
+            savedInstanceState = getActivity() == null ? null : getActivity().getIntent().getExtras();
             if (savedInstanceState != null) {
                 // log("restore 2");
                 restoreState(savedInstanceState);
@@ -48,7 +48,7 @@ public abstract class StateSaverFragment extends Fragment implements StateSaver 
     }
 
     @Override
-    public final void onSaveInstanceState(Bundle outState) {
+    public final void onSaveInstanceState(@NonNull Bundle outState) {
         saveState(outState);
         super.onSaveInstanceState(outState);
     }
@@ -62,13 +62,11 @@ public abstract class StateSaverFragment extends Fragment implements StateSaver 
     @Override
     public abstract void saveState(Bundle state);
 
-    private FragmentKeeper mFragmentKeeper;
-
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (activity instanceof FragmentKeeper) {
-            mFragmentKeeper = (FragmentKeeper) activity;
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof FragmentKeeper) {
+            mFragmentKeeper = (FragmentKeeper) context;
             mFragmentKeeper.attach(this);
         }
     }

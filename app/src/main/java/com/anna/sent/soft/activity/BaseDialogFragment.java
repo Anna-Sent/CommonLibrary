@@ -5,10 +5,10 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.anna.sent.soft.logging.MyLog;
-import com.anna.sent.soft.strategy.activity.StrategyFragment;
+import com.anna.sent.soft.strategy.activity.StrategyDialogFragment;
 import com.anna.sent.soft.strategy.lifecycle.LifecycleStrategy;
 
-public abstract class BaseFragment extends StrategyFragment
+public abstract class BaseDialogFragment extends StrategyDialogFragment
         implements LifecycleStrategy.Listener {
     private String wrapMsg(String msg) {
         return toString() + ": " + msg;

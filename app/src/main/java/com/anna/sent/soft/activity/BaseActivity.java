@@ -18,7 +18,7 @@ public abstract class BaseActivity extends StrategyFragmentActivity
     private SettingsTheme settingsTheme;
 
     private String wrapMsg(String msg) {
-        return getClass().getSimpleName() + '@' + Integer.toHexString(hashCode()) + ": " + msg;
+        return toString() + ": " + msg;
     }
 
     @Override

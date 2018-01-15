@@ -3,23 +3,30 @@ package com.anna.sent.soft.settings;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.support.annotation.ArrayRes;
 
 public abstract class SettingsLanguage {
-    public int getLanguage(Context context) {
-        int defaultValue = getDefaultLanguage(context);
+    protected final Context context;
 
-        if (isLanguageSetByUser(context)) {
-            SharedPreferences settings = getSettings(context);
-            String value = settings.getString(getLanguageKey(context), null);
+    public SettingsLanguage(Context context) {
+        this.context = context;
+    }
+
+    public int getLanguageId() {
+        int defaultValue = getDefaultLanguageId();
+
+        if (isLanguageSetByUser()) {
+            SharedPreferences settings = getSettings();
+            String value = settings.getString(getLanguageKey(), null);
             if (value == null) {
                 return defaultValue;
             }
 
             try {
                 int id = Integer.parseInt(value);
-                int index = getLanguageIndex(context, id);
+                int index = getLanguageIndex(id);
                 if (index == -1) {
-                    id = defaultValue;
+                    return defaultValue;
                 }
 
                 return id;
@@ -31,35 +38,23 @@ public abstract class SettingsLanguage {
         return defaultValue;
     }
 
-    private int getDefaultLanguage(Context context) {
-        String[] locales = context.getResources().getStringArray(getLocaleArrayResourceId());
-        String currentLocale = context.getResources().getConfiguration().locale.getLanguage();
-        for (int i = 0; i < locales.length; ++i) {
-            if (locales[i].equals(currentLocale)) {
-                String[] languages = context.getResources().getStringArray(
-                        getLanguageValuesArrayResourceId());
-                String value = languages[i];
-                try {
-                    return Integer.parseInt(value);
-                } catch (NumberFormatException e) {
-                    throw new RuntimeException("Incorrect value of language: " + value, e);
-                }
-            }
-        }
-
-        return getDefaultLanguageId(context);
+    public void setLanguageId(int value) {
+        SharedPreferences settings = getSettings();
+        Editor editor = settings.edit();
+        editor.putString(getLanguageKey(), String.valueOf(value));
+        editor.putBoolean(getIsLanguageSetByUserKey(), true);
+        editor.apply();
     }
 
-    public String getLocale(Context context) {
-        String[] locales = context.getResources().getStringArray(getLocaleArrayResourceId());
-        int id = getLanguage(context);
-        int index = getLanguageIndex(context, id);
+    public String getLocale() {
+        String[] locales = context.getResources().getStringArray(getLocales());
+        int id = getLanguageId();
+        int index = getLanguageIndex(id);
         return locales[index];
     }
 
-    private int getLanguageIndex(Context context, int id) {
-        String[] languages = context.getResources().getStringArray(
-                getLanguageValuesArrayResourceId());
+    private int getLanguageIndex(int id) {
+        String[] languages = context.getResources().getStringArray(getLanguageIds());
         for (int i = 0; i < languages.length; ++i) {
             if (languages[i].equals(String.valueOf(id))) {
                 return i;
@@ -69,28 +64,25 @@ public abstract class SettingsLanguage {
         return -1;
     }
 
-    public boolean isLanguageSetByUser(Context context) {
-        SharedPreferences settings = getSettings(context);
-        return settings.getBoolean(getIsLanguageSetByUserKey(context), false);
+    public boolean isLanguageSetByUser() {
+        SharedPreferences settings = getSettings();
+        return settings.getBoolean(getIsLanguageSetByUserKey(), false);
     }
 
-    public void setLanguage(Context context, int value) {
-        SharedPreferences settings = getSettings(context);
-        Editor editor = settings.edit();
-        editor.putString(getLanguageKey(context), String.valueOf(value));
-        editor.putBoolean(getIsLanguageSetByUserKey(context), true);
-        editor.apply();
-    }
+    protected abstract SharedPreferences getSettings();
 
-    protected abstract SharedPreferences getSettings(Context context);
+    public abstract String getLanguageKey();
 
-    public abstract String getLanguageKey(Context context);
+    protected abstract String getIsLanguageSetByUserKey();
 
-    protected abstract String getIsLanguageSetByUserKey(Context context);
+    @ArrayRes
+    protected abstract int getLanguages();
 
-    protected abstract int getLocaleArrayResourceId();
+    @ArrayRes
+    protected abstract int getLanguageIds();
 
-    protected abstract int getLanguageValuesArrayResourceId();
+    @ArrayRes
+    protected abstract int getLocales();
 
-    protected abstract int getDefaultLanguageId(Context context);
+    protected abstract int getDefaultLanguageId();
 }

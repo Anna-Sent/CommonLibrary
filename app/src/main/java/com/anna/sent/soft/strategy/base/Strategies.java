@@ -1,4 +1,4 @@
-package com.anna.sent.soft.strategy;
+package com.anna.sent.soft.strategy.base;
 
 import android.content.Intent;
 import android.content.res.Configuration;

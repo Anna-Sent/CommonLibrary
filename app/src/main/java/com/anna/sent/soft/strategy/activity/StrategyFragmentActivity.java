@@ -9,8 +9,8 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.anna.sent.soft.strategy.BaseStrategy;
-import com.anna.sent.soft.strategy.Strategies;
+import com.anna.sent.soft.strategy.base.BaseStrategy;
+import com.anna.sent.soft.strategy.base.Strategies;
 
 import java.util.ArrayList;
 import java.util.List;

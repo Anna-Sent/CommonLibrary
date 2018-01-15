@@ -11,8 +11,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
-import com.anna.sent.soft.strategy.BaseStrategy;
-import com.anna.sent.soft.strategy.Strategies;
+import com.anna.sent.soft.strategy.base.BaseStrategy;
+import com.anna.sent.soft.strategy.base.Strategies;
 
 public class StrategyFragment extends Fragment {
     private final Strategies mStrategies = new Strategies();

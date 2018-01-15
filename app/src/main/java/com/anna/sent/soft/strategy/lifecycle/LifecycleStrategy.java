@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
-import com.anna.sent.soft.strategy.BaseStrategy;
+import com.anna.sent.soft.strategy.base.BaseStrategy;
 
 public class LifecycleStrategy extends BaseStrategy {
     private Listener mListener = null;

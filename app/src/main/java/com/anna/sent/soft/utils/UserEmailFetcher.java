@@ -2,7 +2,6 @@ package com.anna.sent.soft.utils;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.annotation.SuppressLint;
 import android.content.Context;
 
 /**
@@ -32,7 +31,7 @@ public class UserEmailFetcher {
     }
 
     private static Account getAccount(AccountManager accountManager) {
-        @SuppressLint("MissingPermission")
+        @SuppressWarnings("MissingPermission")
         Account[] accounts = accountManager.getAccountsByType("com.google");
         Account account;
         if (accounts.length > 0) {

@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        versionCode 101
+        versionName "1.0.1"
     }
 
     buildTypes {
@@ -21,4 +21,6 @@ android {
 
 dependencies {
     implementation 'com.android.support:support-v4:27.0.2'
+    implementation 'com.google.firebase:firebase-ads:11.8.0'
+    implementation 'com.google.firebase:firebase-crash:11.8.0'
 }

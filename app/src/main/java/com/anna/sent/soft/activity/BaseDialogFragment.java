@@ -5,11 +5,16 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.anna.sent.soft.logging.MyLog;
+import com.anna.sent.soft.settings.SettingsLanguage;
+import com.anna.sent.soft.settings.SettingsTheme;
 import com.anna.sent.soft.strategy.activity.StrategyDialogFragment;
 import com.anna.sent.soft.strategy.lifecycle.LifecycleStrategy;
 
 public abstract class BaseDialogFragment extends StrategyDialogFragment
         implements LifecycleStrategy.Listener {
+    protected SettingsLanguage settingsLanguage;
+    protected SettingsTheme settingsTheme;
+
     private String wrapMsg(String msg) {
         return toString() + ": " + msg;
     }
@@ -30,8 +35,14 @@ public abstract class BaseDialogFragment extends StrategyDialogFragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         MyLog.getInstance().init(getAppTag());
+        settingsLanguage = createSettingsLanguage();
+        settingsTheme = createSettingsTheme();
         super.onCreate(savedInstanceState);
     }
 
     protected abstract String getAppTag();
+
+    protected abstract SettingsLanguage createSettingsLanguage();
+
+    protected abstract SettingsTheme createSettingsTheme();
 }

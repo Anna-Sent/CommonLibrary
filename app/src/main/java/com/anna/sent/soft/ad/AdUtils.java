@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.provider.Settings;
 import android.support.annotation.IdRes;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.util.Log;
 
@@ -26,18 +27,20 @@ public class AdUtils {
         return context.getPackageName().endsWith(".pro");
     }
 
+    @Nullable
     @SuppressWarnings("MissingPermission")
-    public static void setupAd(Activity activity,
-                               @IdRes int adViewId,
-                               @StringRes int adUnitId,
-                               boolean showAd) {
+    public static AdView setupAd(Activity activity,
+                                 @IdRes int adViewId,
+                                 @StringRes int adUnitId,
+                                 boolean showAd) {
         if (showAd && !isAdFreeVersion(activity)) {
             MyLog.getInstance().logcat(Log.INFO, "ad: Device id is " + getTestDeviceId(activity));
             AdView adView = activity.findViewById(adViewId);
             if (adView != null) {
                 MobileAds.initialize(activity.getApplicationContext(), activity.getString(adUnitId));
                 com.google.android.gms.ads.AdRequest.Builder adRequestBuilder = new com.google.android.gms.ads.AdRequest.Builder()
-                        .setGender(com.google.android.gms.ads.AdRequest.GENDER_FEMALE);
+                        .setGender(com.google.android.gms.ads.AdRequest.GENDER_FEMALE)
+                        .setIsDesignedForFamilies(true);
 
                 if (BuildConfig.DEBUG) {
                     adRequestBuilder
@@ -54,8 +57,10 @@ public class AdUtils {
                 MyLog.getInstance().logcat(Log.INFO, "ad: isTestDevice = " + adRequest.isTestDevice(activity));
 
                 adView.loadAd(adRequest);
+                return adView;
             }
         }
+        return null;
     }
 
     private static String getTestDeviceId(Context context) {

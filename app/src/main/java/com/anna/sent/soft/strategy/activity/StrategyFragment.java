@@ -27,6 +27,7 @@ public class StrategyFragment extends Fragment {
         mStrategies.onCreate(savedInstanceState);
     }
 
+    @SuppressWarnings("EmptyMethod")
     protected void addStrategies() {
     }
 

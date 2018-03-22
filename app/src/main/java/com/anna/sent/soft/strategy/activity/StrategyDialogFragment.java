@@ -27,6 +27,7 @@ public class StrategyDialogFragment extends DialogFragment {
         mStrategies.onCreate(savedInstanceState);
     }
 
+    @SuppressWarnings("EmptyMethod")
     protected void addStrategies() {
     }
 

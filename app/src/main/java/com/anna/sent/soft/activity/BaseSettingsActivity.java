@@ -39,7 +39,7 @@ public abstract class BaseSettingsActivity extends PreferenceActivity implements
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        MyLog.getInstance().init(getAppTag());
+        MyLog.getInstance().init(this, getAppTag());
         settingsLanguage = createSettingsLanguage();
         settingsTheme = createSettingsTheme();
         setupTheme();

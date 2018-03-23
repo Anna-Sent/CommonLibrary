@@ -1,8 +1,11 @@
 package com.anna.sent.soft.logging;
 
+import android.content.Context;
 import android.util.Log;
 
-import com.google.firebase.crash.FirebaseCrash;
+import com.crashlytics.android.Crashlytics;
+
+import io.fabric.sdk.android.Fabric;
 
 public class MyLog {
     private static MyLog sInstance;
@@ -43,18 +46,19 @@ public class MyLog {
         }
     }
 
-    public void init(String tag) {
+    public void init(Context context, String tag) {
         this.tag = tag;
         if (mIsInitialized) {
             return;
         }
 
+        Fabric.with(context.getApplicationContext(), new Crashlytics());
         mIsInitialized = true;
     }
 
     public void logcat(int level, String msg) {
         if (mIsInitialized) {
-            FirebaseCrash.logcat(level, tag, msg);
+            Crashlytics.log(level, tag, msg);
         } else {
             noFirebaseLogcat(level, tag, msg);
         }
@@ -62,7 +66,7 @@ public class MyLog {
 
     public void logcat(int level, Throwable throwable) {
         if (mIsInitialized) {
-            FirebaseCrash.logcat(level, tag, Log.getStackTraceString(throwable));
+            Crashlytics.log(level, tag, Log.getStackTraceString(throwable));
         } else {
             noFirebaseLogcat(level, tag, Log.getStackTraceString(throwable));
         }
@@ -75,8 +79,8 @@ public class MyLog {
 
     public void report(Throwable throwable) {
         if (mIsInitialized) {
-            FirebaseCrash.logcat(Log.ERROR, tag, Log.getStackTraceString(throwable));
-            FirebaseCrash.report(throwable);
+            Crashlytics.log(Log.ERROR, tag, Log.getStackTraceString(throwable));
+            Crashlytics.logException(throwable);
         } else {
             noFirebaseLogcat(Log.ERROR, tag, Log.getStackTraceString(throwable));
         }

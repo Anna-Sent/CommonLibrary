@@ -34,7 +34,7 @@ public abstract class BaseDialogFragment extends StrategyDialogFragment
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        MyLog.getInstance().init(getAppTag());
+        MyLog.getInstance().init(getContext(), getAppTag());
         settingsLanguage = createSettingsLanguage();
         settingsTheme = createSettingsTheme();
         super.onCreate(savedInstanceState);

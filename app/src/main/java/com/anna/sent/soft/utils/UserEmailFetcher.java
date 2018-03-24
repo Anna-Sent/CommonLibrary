@@ -13,7 +13,7 @@ public class UserEmailFetcher {
     private static final String INVALID_EMAIL = "";
 
     /**
-     * @param context Context of the app.
+     * @param context context of the app
      * @return email or empty string
      */
     public static String getEmail(Context context) {

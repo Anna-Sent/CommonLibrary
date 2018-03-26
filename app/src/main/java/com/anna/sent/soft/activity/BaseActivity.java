@@ -36,7 +36,7 @@ public abstract class BaseActivity extends StrategyFragmentActivity
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        MyLog.getInstance().init(this, getAppTag());
+        MyLog.getInstance().init(this, getAppTag(), enableCrashReporting());
         settingsLanguage = createSettingsLanguage();
         settingsTheme = createSettingsTheme();
         setupTheme();
@@ -60,6 +60,8 @@ public abstract class BaseActivity extends StrategyFragmentActivity
     }
 
     protected abstract String getAppTag();
+
+    protected abstract boolean enableCrashReporting();
 
     protected abstract SettingsLanguage createSettingsLanguage();
 

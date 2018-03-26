@@ -34,13 +34,15 @@ public abstract class BaseFragment extends StrategyFragment
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        MyLog.getInstance().init(getContext(), getAppTag());
+        MyLog.getInstance().init(getContext(), getAppTag(), enableCrashReporting());
         settingsLanguage = createSettingsLanguage();
         settingsTheme = createSettingsTheme();
         super.onCreate(savedInstanceState);
     }
 
     protected abstract String getAppTag();
+
+    protected abstract boolean enableCrashReporting();
 
     protected abstract SettingsLanguage createSettingsLanguage();
 

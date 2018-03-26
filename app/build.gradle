@@ -8,20 +8,18 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 1020
-        versionName "1.0.20"
+        versionCode 1021
+        versionName "1.0.21"
     }
 
     buildTypes {
         debug {
             debuggable true
-            ext.enableCrashlytics = false
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
         release {
             debuggable false
-            ext.enableCrashlytics = true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }

@@ -3,7 +3,9 @@ package com.anna.sent.soft.logging;
 import android.content.Context;
 import android.util.Log;
 
+import com.anna.sent.soft.BuildConfig;
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -52,7 +54,10 @@ public class MyLog {
             return;
         }
 
-        Fabric.with(context.getApplicationContext(), new Crashlytics());
+        Crashlytics crashlyticsKit = new Crashlytics.Builder()
+                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                .build();
+        Fabric.with(context.getApplicationContext(), crashlyticsKit);
         mIsInitialized = true;
     }
 

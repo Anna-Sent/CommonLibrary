@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
-import com.crashlytics.android.core.CrashlyticsCore;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -47,16 +46,13 @@ public class MyLog {
         }
     }
 
-    public void init(Context context, String tag, boolean enableCrashReporting) {
+    public void init(Context context, String tag) {
         this.tag = tag;
         if (mIsInitialized) {
             return;
         }
 
-        Crashlytics crashlyticsKit = new Crashlytics.Builder()
-                .core(new CrashlyticsCore.Builder().disabled(!enableCrashReporting).build())
-                .build();
-        Fabric.with(context.getApplicationContext(), crashlyticsKit);
+        Fabric.with(context.getApplicationContext(), new Crashlytics());
         mIsInitialized = true;
     }
 

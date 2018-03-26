@@ -3,7 +3,6 @@ package com.anna.sent.soft.logging;
 import android.content.Context;
 import android.util.Log;
 
-import com.anna.sent.soft.BuildConfig;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 
@@ -48,14 +47,14 @@ public class MyLog {
         }
     }
 
-    public void init(Context context, String tag) {
+    public void init(Context context, String tag, boolean enableCrashReporting) {
         this.tag = tag;
         if (mIsInitialized) {
             return;
         }
 
         Crashlytics crashlyticsKit = new Crashlytics.Builder()
-                .core(new CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                .core(new CrashlyticsCore.Builder().disabled(!enableCrashReporting).build())
                 .build();
         Fabric.with(context.getApplicationContext(), crashlyticsKit);
         mIsInitialized = true;

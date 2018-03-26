@@ -2,13 +2,16 @@ package com.anna.sent.soft.ad;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
+import android.text.TextUtils;
 import android.util.Log;
 
-import com.anna.sent.soft.BuildConfig;
 import com.anna.sent.soft.logging.MyLog;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
@@ -42,14 +45,10 @@ public class AdUtils {
                         .setGender(com.google.android.gms.ads.AdRequest.GENDER_FEMALE)
                         .setIsDesignedForFamilies(true);
 
-                if (BuildConfig.DEBUG) {
-                    adRequestBuilder
-                            .addTestDevice("2600D922057328C48F2E6DBAB33639C1")
-                            .addTestDevice("9181DC11966389868E60DE66CAC818A3")
-                            .addTestDevice("0A2245B8887D4B05DF59EB37AD741C46")
-                            .addTestDevice("47D9C39F51DAC2173986C7832B6CAB57")
-                            .addTestDevice("2F2B82AD62F209D48AFC29A0C88065FA")
-                            .addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR);
+                adRequestBuilder.addTestDevice(com.google.android.gms.ads.AdRequest.DEVICE_ID_EMULATOR);
+                String[] testDeviceIds = getTestDeviceIds(activity);
+                for (String testDeviceId : testDeviceIds) {
+                    adRequestBuilder.addTestDevice(testDeviceId);
                 }
 
                 com.google.android.gms.ads.AdRequest adRequest = adRequestBuilder.build();
@@ -61,6 +60,22 @@ public class AdUtils {
             }
         }
         return null;
+    }
+
+    private static String[] getTestDeviceIds(Context context) {
+        try {
+            ApplicationInfo applicationInfo = context.getPackageManager()
+                    .getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            Bundle bundle = applicationInfo.metaData;
+            String testDeviceIds = bundle.getString("test_device_ids");
+            if (!TextUtils.isEmpty(testDeviceIds)) {
+                return testDeviceIds.split(",");
+            }
+        } catch (Exception e) {
+            MyLog.getInstance().logcat(Log.ERROR, "failed to load meta-data", e);
+            MyLog.getInstance().report(e);
+        }
+        return new String[0];
     }
 
     private static String getTestDeviceId(Context context) {

@@ -20,7 +20,7 @@ public class MyLog {
         return sInstance;
     }
 
-    private static void noFirebaseLogcat(int level, String tag, String msg) {
+    private static void notInitializedLogcat(int level, String tag, String msg) {
         switch (level) {
             case Log.ASSERT:
                 Log.wtf(tag, msg);
@@ -60,7 +60,7 @@ public class MyLog {
         if (mIsInitialized) {
             Crashlytics.log(level, tag, msg);
         } else {
-            noFirebaseLogcat(level, tag, msg);
+            notInitializedLogcat(level, tag, msg);
         }
     }
 
@@ -68,7 +68,7 @@ public class MyLog {
         if (mIsInitialized) {
             Crashlytics.log(level, tag, Log.getStackTraceString(throwable));
         } else {
-            noFirebaseLogcat(level, tag, Log.getStackTraceString(throwable));
+            notInitializedLogcat(level, tag, Log.getStackTraceString(throwable));
         }
     }
 
@@ -82,7 +82,7 @@ public class MyLog {
             Crashlytics.log(Log.ERROR, tag, Log.getStackTraceString(throwable));
             Crashlytics.logException(throwable);
         } else {
-            noFirebaseLogcat(Log.ERROR, tag, Log.getStackTraceString(throwable));
+            notInitializedLogcat(Log.ERROR, tag, Log.getStackTraceString(throwable));
         }
     }
 }

@@ -8,8 +8,8 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 1022
-        versionName "1.0.22"
+        versionCode 1023
+        versionName "1.0.23"
     }
 
     buildTypes {
@@ -28,7 +28,7 @@ android {
 
 dependencies {
     implementation 'com.android.support:support-v4:27.1.0'
-    implementation 'com.google.firebase:firebase-core:12.0.0'
-    implementation 'com.google.firebase:firebase-ads:12.0.0'
+    implementation 'com.google.firebase:firebase-core:12.0.1'
+    implementation 'com.google.firebase:firebase-ads:12.0.1'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.1'
 }

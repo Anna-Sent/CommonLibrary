@@ -55,6 +55,12 @@ public abstract class SettingsLanguage {
         SharedPreferences settings = getSettings();
         Editor editor = settings.edit();
         editor.putString(getLanguageKey(), String.valueOf(value));
+        editor.apply();
+    }
+
+    public void setByUser() {
+        SharedPreferences settings = getSettings();
+        Editor editor = settings.edit();
         editor.putBoolean(getIsLanguageSetByUserKey(), true);
         editor.apply();
     }

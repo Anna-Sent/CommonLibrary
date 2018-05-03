@@ -78,9 +78,9 @@ public abstract class SettingsLanguage {
     }
 
     private int getLanguageIndex(String language) {
-        String[] languages = context.getResources().getStringArray(getLanguages());
-        for (int i = 0; i < languages.length; ++i) {
-            if (languages[i].equals(language)) {
+        String[] locales = context.getResources().getStringArray(getLocales());
+        for (int i = 0; i < locales.length; ++i) {
+            if (locales[i].equals(language)) {
                 return i;
             }
         }

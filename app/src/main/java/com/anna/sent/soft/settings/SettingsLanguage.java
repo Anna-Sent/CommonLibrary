@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.support.annotation.ArrayRes;
 
+import java.util.Locale;
+
 public abstract class SettingsLanguage {
     protected final Context context;
 
@@ -33,6 +35,17 @@ public abstract class SettingsLanguage {
             } catch (NumberFormatException e) {
                 return defaultValue;
             }
+        } else {
+            String language = Locale.getDefault().getLanguage();
+            int languageIndex = getLanguageIndex(language);
+            String[] languageIds = context.getResources().getStringArray(getLanguageIds());
+            if (languageIndex >= 0 && languageIndex < languageIds.length) {
+                try {
+                    return Integer.parseInt(languageIds[languageIndex]);
+                } catch (NumberFormatException e) {
+                    return defaultValue;
+                }
+            }
         }
 
         return defaultValue;
@@ -54,9 +67,20 @@ public abstract class SettingsLanguage {
     }
 
     private int getLanguageIndex(int id) {
-        String[] languages = context.getResources().getStringArray(getLanguageIds());
+        String[] languageIds = context.getResources().getStringArray(getLanguageIds());
+        for (int i = 0; i < languageIds.length; ++i) {
+            if (languageIds[i].equals(String.valueOf(id))) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+
+    private int getLanguageIndex(String language) {
+        String[] languages = context.getResources().getStringArray(getLanguages());
         for (int i = 0; i < languages.length; ++i) {
-            if (languages[i].equals(String.valueOf(id))) {
+            if (languages[i].equals(language)) {
                 return i;
             }
         }

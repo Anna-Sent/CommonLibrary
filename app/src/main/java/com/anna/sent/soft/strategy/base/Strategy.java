@@ -3,10 +3,11 @@ package com.anna.sent.soft.strategy.base;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 
 public interface Strategy {
-    void onCreate(Bundle savedInstanceState);
+    void onCreate(@Nullable Bundle savedInstanceState);
 
     void onActivityResult(int requestCode, int resultCode, Intent data);
 

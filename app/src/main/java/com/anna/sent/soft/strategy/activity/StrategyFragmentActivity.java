@@ -3,6 +3,7 @@ package com.anna.sent.soft.strategy.activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
@@ -20,7 +21,7 @@ public class StrategyFragmentActivity extends FragmentActivity implements Fragme
     private final List<StrategyFragment> mStrategyFragments = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         addStrategies();

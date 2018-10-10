@@ -3,6 +3,7 @@ package com.anna.sent.soft.strategy.base;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 
 public abstract class BaseStrategy implements Strategy {
@@ -11,7 +12,7 @@ public abstract class BaseStrategy implements Strategy {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
     }
 
     @Override

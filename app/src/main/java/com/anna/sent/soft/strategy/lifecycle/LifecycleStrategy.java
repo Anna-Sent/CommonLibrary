@@ -3,6 +3,7 @@ package com.anna.sent.soft.strategy.lifecycle;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 
 import com.anna.sent.soft.strategy.base.BaseStrategy;
 
@@ -46,7 +47,7 @@ public class LifecycleStrategy extends BaseStrategy {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         if (mListener != null) {
             mListener.log("onCreate");
         }

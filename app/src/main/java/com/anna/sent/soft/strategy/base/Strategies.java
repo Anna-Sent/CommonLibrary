@@ -3,6 +3,7 @@ package com.anna.sent.soft.strategy.base;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 
 import java.util.ArrayList;
@@ -16,7 +17,7 @@ public class Strategies implements Strategy {
     private final Map<String, BaseStrategy> mStrategies = new HashMap<>();
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         for (int i = 0; i < mKeys.size(); ++i) {
             String key = mKeys.get(i);
             getStrategy(key).onCreate(savedInstanceState);

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -19,7 +20,7 @@ public class StrategyDialogFragment extends DialogFragment {
     private FragmentKeeper mFragmentKeeper;
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         addStrategies();
@@ -54,7 +55,7 @@ public class StrategyDialogFragment extends DialogFragment {
     }
 
     @Override
-    public void onViewStateRestored(Bundle savedInstanceState) {
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
         mStrategies.onRestoreInstanceState(savedInstanceState);
     }
